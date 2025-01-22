@@ -1,0 +1,21 @@
+import:
+ - ~/.config/alacritty/themes/colors/base16-onedark.yml
+font:
+  normal:
+    family: MesloLGM Nerd Font Mono
+  size: 12
+
+window:
+  option_as_alt: OnlyLeft
+  decorations: buttonless
+  padding:
+    x: 4
+    y: 0
+
+env:
+  TERM: xterm-256color
+
+
+key_bindings:
+  - { key: Return,   mods: Shift,   chars: "\x1b[13;2u" }
+  - { key: Return,   mods: Control, chars: "\x1b[13;5u" }
