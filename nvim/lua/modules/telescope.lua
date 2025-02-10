@@ -56,10 +56,10 @@ end
 
 
   -- slightly brighter background to make the float pop more
-  -- vim.api.nvim_set_hl(0, "FloatBorder", {bg="#3B4252", fg="#5E81AC"}) 
+  vim.api.nvim_set_hl(0, "FloatBorder", {bg="#3B4252", fg="#5E81AC"}) 
   -- vim.api.nvim_set_hl(0, "NormalFloat", {bg="#3B4252"})
   -- vim.api.nvim_set_hl(0, "TelescopeNormal", {bg="#3B4252"})
-  -- vim.api.nvim_set_hl(0, "TelescopeBorder", {bg="#3B4252"})
+  vim.api.nvim_set_hl(0, "TelescopeBorder", {bg="#3B4252"})
 
 -- Keymaps --
 vim.keymap.set("n", "<c-p>", telescope_resume)
@@ -67,3 +67,4 @@ vim.keymap.set("n", "<leader>f", ":lua require('telescope').extensions.live_grep
 
 require("telescope").load_extension("ui-select")
 require('telescope').load_extension('env')
+require('telescope').load_extension('fzf')

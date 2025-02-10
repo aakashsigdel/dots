@@ -12,6 +12,7 @@ require('modules/neo-tree')
 require('modules/luasnip')
 require('modules/conform')
 require('modules/git-conflict')
+require('modules/noice')
 
 require('keymaps')
 require('autocmd')

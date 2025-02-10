@@ -55,11 +55,8 @@ return require('packer').startup(
     use 'echasnovski/mini.pairs'
     use 'rcarriga/nvim-notify'
     use {
-      'akinsho/git-conflict.nvim',
-      tag = "*",
-      config = function()
-        require('git-conflict').setup()
-      end
+      'folke/noice.nvim',
+      requires = "MunifTanjim/nui.nvim"
     }
     use 'wuelnerdotexe/vim-astro'
     use 'stevearc/conform.nvim'

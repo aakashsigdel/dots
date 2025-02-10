@@ -21,6 +21,7 @@ local goto_prev = function(severity)
 end
 
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, rounded_border)
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with( vim.lsp.handlers.signature_help, rounded_border)
 
 local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
@@ -81,107 +82,6 @@ nvim_lsp.ts_ls.setup{
     RemoveUnusedImports = {remove_unused_imports, 'Remove unused imports'}
   }
 }
-
--- local vtsls_ts_opts = {
---   updateImportsOnFileMove = { enabled = "always" },
---   suggest = {
---     completeFunctionCalls = true,
---   },
---   inlayHints = {
---     enumMemberValues = { enabled = true },
---     functionLikeReturnTypes = { enabled = true },
---     parameterNames = { enabled = "literals" },
---     parameterTypes = { enabled = true },
---     propertyDeclarationTypes = { enabled = true },
---     variableTypes = { enabled = false },
---   },
--- }
-
-
--- https://www.lazyvim.org/extras/lang/typescript
--- nvim_lsp.vtsls.setup {
---   server = capabilities,
---   filetypes = {
---     "javascript",
---     "javascriptreact",
---     "javascript.jsx",
---     "typescript",
---     "typescriptreact",
---     "typescript.tsx",
---   },
---   settings = {
---     complete_function_calls = true,
---     vtsls = {
---       enableMoveToFileCodeAction = true,
---       autoUseWorkspaceTsdk = true,
---       experimental = {
---         maxInlayHintLength = 30,
---         completion = {
---           enableServerSideFuzzyMatch = true,
---         },
---       },
---     },
---     typescript = vtsls_ts_opts,
---     javascript = vtsls_ts_opts
---   },
---   commands = {
---     OrganiseImports = {organise_imports, 'Organise imports'},
---     AddMissingImports = {add_missing_imports, 'Add missing imports'},
---     RemoveUnusedImports = {remove_unused_imports, 'Remove unused imports'}
---   },
---   on_attach = function(client, buffer)
---     on_attach_ts(client, buffer)
---
---     client.commands["_typescript.moveToFileRefactoring"] = function(command)
---       ---@type string, string, lsp.Range
---       local action, uri, range = unpack(command.arguments)
---
---       local function move(newf)
---         client.request("workspace/executeCommand", {
---           command = command.command,
---           arguments = { action, uri, range, newf },
---         })
---       end
---
---       local fname = vim.uri_to_fname(uri)
---       client.request("workspace/executeCommand", {
---         command = "typescript.tsserverRequest",
---         arguments = {
---           "getMoveToRefactoringFileSuggestions",
---           {
---             file = fname,
---             startLine = range.start.line + 1,
---             startOffset = range.start.character + 1,
---             endLine = range["end"].line + 1,
---             endOffset = range["end"].character + 1,
---           },
---         },
---       }, function(_, result)
---         ---@type string[]
---         local files = result.body.files
---         table.insert(files, 1, "Enter new path...")
---         vim.ui.select(files, {
---           prompt = "Select move destination:",
---           format_item = function(f)
---             return vim.fn.fnamemodify(f, ":~:.")
---           end,
---         }, function(f)
---           if f and f:find("^Enter new path") then
---             vim.ui.input({
---               prompt = "Enter move destination:",
---               default = vim.fn.fnamemodify(fname, ":h") .. "/",
---               completion = "file",
---             }, function(newf)
---               return newf and move(newf)
---             end)
---           elseif f then
---             move(f)
---           end
---         end)
---       end)
---     end
---   end
--- }
 
 nvim_lsp.denols.setup {
   on_attach = on_attach,

@@ -22,7 +22,12 @@ require'nvim-treesitter.configs'.setup {
     "java",
     "bash",
     "json",
-    "jsonc"
+    "jsonc",
+    "vim",
+    "regex",
+    "lua",
+    "markdown",
+    "markdown_inline"
   },
   textsubjects = {
     enable = true,
