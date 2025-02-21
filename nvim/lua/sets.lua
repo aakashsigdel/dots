@@ -1,9 +1,11 @@
 vim.opt.syntax = 'enable'
 vim.opt.termguicolors = true
--- vim.o.winbar = "%{%v:lua.require('modules/winbar').eval()%}"
+vim.o.winbar = "%{%v:lua.require('winbar').eval()%}"
+vim.g.jsx_ext_required = 0
 
 vim.cmd [[
   syntax on
+  set re=0
   set laststatus=2
   set hidden
   filetype plugin indent on
@@ -55,4 +57,10 @@ vim.cmd [[
   set fillchars+=vert:\|
 
   let g:astro_typescript = 'enable'
+
+  set diffopt+=vertical
+  let g:prettier#autoformat = 1
+  let g:prettier#autoformat_config_present = 1
+  let g:prettier#autoformat_require_pragma = 0
+  let g:prettier#exec_cmd_async = 1
 ]]

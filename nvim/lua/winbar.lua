@@ -1,4 +1,3 @@
-local utils = require('utils')
 local dev_icons = require('nvim-web-devicons')
 
 local M = {}

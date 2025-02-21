@@ -1,9 +1,6 @@
-local builtin = require('telescope.builtin')
 local utils = require('utils')
-local nvim_lsp = require('lspconfig')
 local extend = utils.extend
 
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local rounded_border = {border = 'rounded'}
 
 local goto_next = function(severity)
@@ -34,7 +31,7 @@ local on_attach = function(_, bufnr)
   local bufopts = { noremap=true, silent=true, buffer=bufnr }
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
   vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', 'gr', builtin.lsp_references, opts)
+  vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, opts)
   vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
   vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover, bufopts)
   vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
@@ -73,69 +70,46 @@ local function remove_unused_imports()
   })
 end
 
-nvim_lsp.ts_ls.setup{
-  server = capabilities,
-  on_attach = on_attach_ts,
-  commands = {
-    OrganiseImports = {organise_imports, 'Organise imports'},
-    AddMissingImports = {add_missing_imports, 'Add missing imports'},
-    RemoveUnusedImports = {remove_unused_imports, 'Remove unused imports'}
-  }
+
+return {
+  'neovim/nvim-lspconfig',
+  dependencies = { 'saghen/blink.cmp' },
+  opts = {
+      servers = {
+      ts_ls = {
+        on_attach = on_attach_ts,
+        commands = {
+          OrganiseImports = {organise_imports, 'Organise imports'},
+          AddMissingImports = {add_missing_imports, 'Add missing imports'},
+          RemoveUnusedImports = {remove_unused_imports, 'Remove unused imports'}
+        }
+      },
+      lua_ls = {
+        on_attach = on_attach,
+        settings = {
+          Lua = {
+            runtime = { version = 'LuaJIT' },
+            diagnostics = { globals = {'vim'} },
+            workspace = { library = vim.api.nvim_get_runtime_file("", true) },
+            telemetry = { enable = false },
+          },
+        },
+      },
+      eslint = {},
+    }
+  },
+  config = function(_, opts)
+    vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
+    local lspconfig = require('lspconfig')
+    for server, config in pairs(opts.servers) do
+      config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
+      lspconfig[server].setup(config)
+    end
+  end
 }
 
-nvim_lsp.denols.setup {
-  on_attach = on_attach,
-  root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
-}
 
-nvim_lsp.eslint.setup{}
-nvim_lsp.astro.setup{}
-
-nvim_lsp.lua_ls.setup {
-  server = {
-    capabilities = capabilities,
-    on_attach = on_attach
-  },
-  settings = {
-    Lua = {
-      runtime = { version = 'LuaJIT' },
-      diagnostics = { globals = {'vim'} },
-      workspace = { library = vim.api.nvim_get_runtime_file("", true) },
-      telemetry = { enable = false },
-    },
-  },
-}
-
-vim.opt.completeopt = {'menu', 'menuone', 'noselect'}
-
-require'cmp'.setup({
-  window = {
-    completion = require'cmp'.config.window.bordered(),
-    documentation = require'cmp'.config.window.bordered(),
-  },
-  mapping = require'cmp'.mapping.preset.insert({
-    ['<C-d>'] = require'cmp'.mapping.scroll_docs(-4),
-    ['<C-f>'] = require'cmp'.mapping.scroll_docs(4),
-    ['<CR>'] = require'cmp'.mapping.confirm({ select = true }),
-  }),
-  sources = require'cmp'.config.sources({
-    { name = 'nvim_lsp' },
-    { name = 'path' },
-    { name = 'luasnip' },
-  }, {
-    { name = 'buffer' },
-  }),
-  formatting = {
-    format = require'lspkind'.cmp_format()
-  }
-})
-
-require'cmp'.setup.filetype('gitcommit', {
-  sources = require'cmp'.config.sources({
-    { name = 'cmp_git' },
-  }, {
-    { name = 'buffer' },
-  })
-})
-
-require'lspconfig'.terraformls.setup{}
+-- nvim_lsp.denols.setup {
+--   on_attach = on_attach,
+--   root_dir = nvim_lsp.util.root_pattern("deno.json", "deno.jsonc"),
+-- }
