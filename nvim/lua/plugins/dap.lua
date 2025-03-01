@@ -45,9 +45,31 @@ return {
   },
   config = function ()
     local dap = require('dap')
-    local ui = require "dapui"
+    local ui = require("dapui")
 
-    ui.setup()
+    ui.setup({
+      layouts = {{
+        elements = {
+          { id = "stacks", size = 0.25 },
+          { id = "breakpoints", size = 0.25 },
+          { id = "scopes", size = 0.25 },
+          { id = "watches", size = 0.25, title = "aakash" },
+        },
+        position = "left",
+        size = 40
+      }, {
+        elements = { {
+            id = "repl",
+            size = 0.5
+          }, {
+            id = "console",
+            size = 0.5
+          } },
+        position = "bottom",
+        size = 10
+
+      }}
+    })
 
     vim.api.nvim_set_hl(0, "DapStoppedLine", { default = true, link = "Visual" })
 
@@ -160,7 +182,6 @@ return {
     { "<leader>db", function() require("dap").toggle_breakpoint() end, desc = "Toggle Breakpoint" },
     { "<leader>dc", function() require("dap").continue() end, desc = "Run/Continue" },
     { "<leader>dC", function() require("dap").run_to_cursor() end, desc = "Run to Cursor" },
-    { "<leader>dg", function() require("dap").goto_() end, desc = "Go to Line (No Execute)" },
     { "<leader>di", function() require("dap").step_into() end, desc = "Step Into" },
     { "<leader>dj", function() require("dap").down() end, desc = "Down" },
     { "<leader>dk", function() require("dap").up() end, desc = "Up" },
@@ -171,7 +192,16 @@ return {
     { "<leader>dr", function() require("dap").repl.toggle() end, desc = "Toggle REPL" },
     { "<leader>ds", function() require("dap").session() end, desc = "Session" },
     { "<leader>dt", function() require("dap").terminate() end, desc = "Terminate" },
+    {
+      "<leader>dd",
+      function()
+        require("dap").disconnect()
+        require("dap").close()
+        require("dapui").close()
+      end,
+      desc = "Disconnect" },
     { "<leader>dw", function() require("dap.ui.widgets").hover() end, desc = "Widgets" },
-    { "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" }, -- figure out what get args is
+    { "<leader>da", function() require("dap").continue({ before = get_args }) end, desc = "Run with Args" },
+    { "<leader>de", function() require("dap").eval() end, desc = "Eval expression under cursor" },
   },
 }

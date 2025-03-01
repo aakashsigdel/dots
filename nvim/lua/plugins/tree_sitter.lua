@@ -24,6 +24,7 @@ return {
       sync_install = false,
       highlight = { enable = true },
       indent = { enable = false },
+      auto_install = true,
       ensure_installed = {
         "typescript",
         "tsx",

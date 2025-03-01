@@ -12,16 +12,6 @@ local fixfolds = {
    end,
 }
 
-local telescope_last = 0
-local function telescope_resume()
-  if telescope_last == 0 then
-    telescope_last = 1
-    require('telescope.builtin').live_grep(require('telescope.themes').get_dropdown())
-  else
-    require('telescope.builtin').resume(require('telescope.themes').get_dropdown())
-  end
-end
-
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = {
