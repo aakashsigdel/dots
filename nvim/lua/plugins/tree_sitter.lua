@@ -44,6 +44,7 @@ return {
         "gitcommit",
         "gitignore",
         "tmux",
+        "diff",
       },
     })
   end

@@ -1,10 +1,8 @@
 local map = require('utils').map
 
-map('n', '<leader>n', ':nohlsearch<CR>')
-map('n', '<space>', 'za')
-map('n', 'gp', '`[v`]')
-map('n', '<leader><space>', ':b#<CR>')
-map('n', '<leader>0<CR>', ':BufOnly<CR>')
-map('n', '<leader>a<CR>', ':%bd<CR><C-o')
-map('t', '<C-[>', [[<C-\><C-n>]])
-map('n', '<leader>bc', 'let @+ = expand("%:p")')
+map('n', '<leader>n', ':nohlsearch<CR>') -- remove search highlight
+map('n', '<space>', 'za') -- toggle fold
+map('n', 'gp', '`[v`]') -- select last copied block
+map('n', '<leader><space>', ':b#<CR>') -- open previous buffer
+map('n', '<leader>o<CR>', ':BufOnly<CR>') -- close all other buffers
+map('n', '<leader>a<CR>', ':%bd<CR><C-o') -- close all buffers

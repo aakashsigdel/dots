@@ -5,7 +5,11 @@ return {
       ensure_installed = { 'ts_ls', 'lua_ls', 'eslint' },
     },
     dependencies = {
-      {'williamboman/mason.nvim', opts = {}}
+      {'williamboman/mason.nvim', opts = {
+        ui = {
+          border = "rounded"
+        }
+      }}
     }
   }
 }

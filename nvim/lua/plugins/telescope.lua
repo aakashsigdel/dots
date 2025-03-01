@@ -73,7 +73,7 @@ return {
   keys = {
     {'<leader>f', ":lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>"},
     {'<c-p>', '<cmd>Telescope find_files<cr>'},
-    {'<leader>gs', '<cmd>Telescope git_status<cr>'},
+    {'<leader>tgs', '<cmd>Telescope git_status<cr>'},
     {'<c-b>', "<cmd>Telescope buffers<cr>"},
     {'<leader>tc', '<cmd>Telescope commands<cr>'},
     {'<C-LeftMouse>', '<cmd>Telescope lsp_definitions<CR>'},
