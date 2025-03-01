@@ -25,6 +25,9 @@ export PATH="/Users/aakashsigdel/Downloads:$PATH"
 export PATH="~/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 
+# ------ Rust -----
+export CARGO_HOME="/Users/$USER/.config/cargo"
+
 # ----- Android ----
 export ANDROID_HOME=/Users/$USER/Library/Android/sdk
 export PATH="$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools"
