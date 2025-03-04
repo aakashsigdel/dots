@@ -1,4 +1,5 @@
 return {
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   'RRethy/nvim-base16',
   'vim-scripts/BufOnly.vim',
   -- TODO: old

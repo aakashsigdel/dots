@@ -6,3 +6,4 @@ map('n', 'gp', '`[v`]') -- select last copied block
 map('n', '<leader><space>', ':b#<CR>') -- open previous buffer
 map('n', '<leader>o<CR>', ':BufOnly<CR>') -- close all other buffers
 map('n', '<leader>a<CR>', ':%bd<CR><C-o') -- close all buffers
+map({'n', 'v'}, '<leader>y', '"*y') -- copy to clipboard

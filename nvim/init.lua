@@ -42,4 +42,4 @@ require('lazy').setup({
   },
 })
 
-vim.cmd [[colorscheme base16-oceanicnext]]
+vim.cmd [[colorscheme catppuccin-frappe]]

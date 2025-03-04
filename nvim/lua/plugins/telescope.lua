@@ -26,7 +26,7 @@ return {
     vim.api.nvim_set_hl(0, "FloatBorder", {bg="#3B4252", fg="#5E81AC"})
     vim.api.nvim_set_hl(0, "TelescopeBorder", {bg="#3B4252"})
     local telescope = require('telescope')
-    telescope.load_extension("live_grep_args")
+    local lga_actions = require("telescope-live-grep-args.actions")
     telescope.setup({
       defaults = {
         file_ignore_patterns = {'.vscode', '.idea', '.git'},
@@ -52,13 +52,25 @@ return {
         git_files = fixfolds,
         grep_string = fixfolds,
         live_grep = utils.extend(fixfolds, {additional_args = function(opts) return {"--hidden"} end}),
+      },
+      extensions = {
+        live_grep_args = {
+          auto_quoting = true,
+          mappings = {
+            i = {
+              ["<C-k>"] = lga_actions.quote_prompt(),
+              ["<C-i>"] = lga_actions.quote_prompt({ postfix = " -ig " }),
+            },
+          },
+        },
       }
     })
 
-    require("telescope").load_extension("ui-select")
-    require('telescope').load_extension('env')
-    require('telescope').load_extension('fzf')
-    require('telescope').load_extension('neoclip')
+    telescope.load_extension("live_grep_args")
+    telescope.load_extension("ui-select")
+    telescope.load_extension('env')
+    telescope.load_extension('fzf')
+    telescope.load_extension('neoclip')
   end,
   keys = {
     {'<leader>f', ":lua require('telescope').extensions.live_grep_args.live_grep_args()<cr>"},

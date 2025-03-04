@@ -40,6 +40,7 @@ alias act="act --container-architecture linux/amd64"
 alias rg="rg --hidden"
 alias emulator="~/Library/Android/sdk/emulator/emulator"
 
+alias v="vim"
 alias vi="vim"
 alias vim="nvim"
 
