@@ -12,6 +12,17 @@ local fixfolds = {
    end,
 }
 
+
+local toggle_hidden_files = (function()
+  local builtin = require("telescope.builtin")
+  local hidden = false
+
+  return function()
+    hidden = not hidden
+    builtin.find_files({ hidden = hidden, no_ignore = hidden })
+  end
+end)()
+
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = {
@@ -36,6 +47,7 @@ return {
             ['<leader>?'] = require("telescope.actions.layout").toggle_preview,
             ['<C-j>'] = require('telescope.actions').cycle_history_next,
             ['<C-k>'] = require('telescope.actions').cycle_history_prev,
+            ['<C-h>'] = toggle_hidden_files,
           },
           n = {
             ['<esc>'] = require('telescope.actions').close,
